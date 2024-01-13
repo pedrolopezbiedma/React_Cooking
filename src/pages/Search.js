@@ -18,9 +18,13 @@ const Search = () => {
   } = useFetch(`http://localhost:3005/recipes?q=${query}`);
   return (
     <div className="search">
+      <h2 className="page-title">Recipes with text {query}</h2>
       {pending && <p className="pending">Loading...</p>}
       {error && <p className="error">{error}</p>}
-      {recipes && <RecipeList recipes={recipes} />}
+      {recipes && recipes.length === 0 && (
+        <p className="error">No recipes found</p>
+      )}
+      {recipes && recipes.length > 0 && <RecipeList recipes={recipes} />}
     </div>
   );
 };
