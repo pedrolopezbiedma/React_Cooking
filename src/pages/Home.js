@@ -12,7 +12,7 @@ const Home = () => {
   } = useFetch("http://localhost:3005/recipes");
 
   return (
-    <div className="Home">
+    <div className="home">
       {error && <p className="error">{error}</p>}
       {isPending && <p className="pending">Loading...</p>}
       {recipes && <RecipeList recipes={recipes} />}
