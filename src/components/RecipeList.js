@@ -1,7 +1,11 @@
+// React
 import { Link } from "react-router-dom";
 
-import "./RecipeList.css";
+// Context
 import { useThemeContext } from "../hooks/useThemeContext";
+
+// Styles
+import "./RecipeList.css";
 
 const RecipeList = ({ recipes }) => {
   const { mode } = useThemeContext();

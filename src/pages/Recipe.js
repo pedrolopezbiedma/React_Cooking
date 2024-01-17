@@ -1,18 +1,46 @@
+// React
 import { useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
+import { useState, useEffect } from "react";
+
+// Firebase
+import { projectFirestore } from "../firebase/config";
+
+// Context
+import { useThemeContext } from "../hooks/useThemeContext";
 
 // Styles
 import "./Recipe.css";
-import { useThemeContext } from "../hooks/useThemeContext";
 
 const Recipe = () => {
   const { mode } = useThemeContext();
   const { id: recipeId } = useParams();
-  const {
-    data: recipe,
-    isPending,
-    error,
-  } = useFetch(`http://localhost:3005/recipes/${recipeId}`);
+  const [recipe, setRecipe] = useState(null);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setIsPending(true);
+    const unsub = projectFirestore
+      .collection("recipes")
+      .doc(recipeId)
+      .onSnapshot(
+        (snapshot) => {
+          const recipe = snapshot.data();
+          setRecipe({ id: snapshot.id, ...recipe });
+          setIsPending(false);
+        },
+        (error) => {
+          setIsPending(false);
+          setError(error);
+        }
+      );
+
+    // Cleanup
+    return () => {
+      unsub();
+    };
+  }, [recipeId]);
+
   return (
     <div className={`recipe ${mode}`}>
       {error && <p className="error">{error}</p>}
