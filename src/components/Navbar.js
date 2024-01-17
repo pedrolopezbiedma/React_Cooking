@@ -11,7 +11,7 @@ import { useThemeContext } from "../hooks/useThemeContext";
 import SearchBar from "./SearchBar";
 
 const Navbar = () => {
-  const { color, changeColor } = useThemeContext();
+  const { color } = useThemeContext();
 
   return (
     <div className="navbar" style={{ background: color }}>
