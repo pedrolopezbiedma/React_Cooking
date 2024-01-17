@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import ThemeSelector from "./components/ThemeSelector";
 import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Recipe from "./pages/Recipe";
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
+        <ThemeSelector />
         <Switch>
           <Route exact path="/">
             <Home />
