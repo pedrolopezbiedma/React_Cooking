@@ -1,5 +1,10 @@
+// React
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+// Hooks
+import { useThemeContext } from "./hooks/useThemeContext";
+
+// Components
 import Navbar from "./components/Navbar";
 import ThemeSelector from "./components/ThemeSelector";
 import Home from "./pages/Home";
@@ -11,8 +16,9 @@ import Search from "./pages/Search";
 import "./App.css";
 
 function App() {
+  const { mode } = useThemeContext();
   return (
-    <div className="App">
+    <div className={`App ${mode}`}>
       <BrowserRouter>
         <Navbar />
         <ThemeSelector />

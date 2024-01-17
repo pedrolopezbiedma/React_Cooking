@@ -4,6 +4,7 @@ const ThemeContext = createContext();
 
 const initialState = {
   color: "#58249c",
+  mode: "dark",
 };
 
 const reducer = (state, action) => {
@@ -12,6 +13,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         color: action.payload,
+      };
+    case "CHANGE_MODE":
+      return {
+        ...state,
+        mode: action.payload,
       };
     default:
       return state;
@@ -25,8 +31,14 @@ const ThemeContextProvider = ({ children }) => {
     dispatch({ type: "CHANGE_COLOR", payload: color });
   };
 
+  const changeMode = (mode) => {
+    dispatch({ type: "CHANGE_MODE", payload: mode });
+  };
+
   return (
-    <ThemeContext.Provider value={{ color: state.color, changeColor }}>
+    <ThemeContext.Provider
+      value={{ color: state.color, mode: state.mode, changeColor, changeMode }}
+    >
       {children}
     </ThemeContext.Provider>
   );

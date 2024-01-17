@@ -3,8 +3,10 @@ import { useFetch } from "../hooks/useFetch";
 
 // Styles
 import "./Recipe.css";
+import { useThemeContext } from "../hooks/useThemeContext";
 
 const Recipe = () => {
+  const { mode } = useThemeContext();
   const { id: recipeId } = useParams();
   const {
     data: recipe,
@@ -12,7 +14,7 @@ const Recipe = () => {
     error,
   } = useFetch(`http://localhost:3005/recipes/${recipeId}`);
   return (
-    <div className="recipe">
+    <div className={`recipe ${mode}`}>
       {error && <p className="error">{error}</p>}
       {isPending && <p className="pending">Loading...</p>}
       {recipe && (

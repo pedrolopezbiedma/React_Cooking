@@ -14,11 +14,7 @@ const Navbar = () => {
   const { color, changeColor } = useThemeContext();
 
   return (
-    <div
-      className="navbar"
-      onClick={() => changeColor("blue")}
-      style={{ background: color }}
-    >
+    <div className="navbar" style={{ background: color }}>
       <nav>
         <Link to="/" className="brand">
           <h1>Cooking Site</h1>
