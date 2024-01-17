@@ -1,7 +1,9 @@
-// Styles
-import { useState, useEffect } from "react";
+// React
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
+
+// Firebase
+import { projectFirestore } from "../firebase/config";
 
 // Styles
 import "./Create.css";
@@ -12,10 +14,6 @@ const Create = () => {
   const [method, setMethod] = useState("");
   const [ingredient, setIngredient] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState([]);
-  const { postData, data: result } = useFetch(
-    "http://localhost:3005/recipes",
-    "POST"
-  );
   const history = useHistory();
 
   const onAddIngredient = (event) => {
@@ -28,16 +26,17 @@ const Create = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    postData({ title, cookingTime, ingredients: recipeIngredients, method });
-  };
-
-  useEffect(() => {
-    if (result) {
+    try {
+      await projectFirestore
+        .collection("recipes")
+        .add({ title, cookingTime, ingredients: recipeIngredients, method });
       history.push("/");
+    } catch (error) {
+      console.log("Error when creating the form:", error);
     }
-  }, [result, history]);
+  };
 
   return (
     <div className="create">
